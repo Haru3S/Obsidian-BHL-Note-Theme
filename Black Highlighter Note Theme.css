@@ -1,0 +1,406 @@
+/*------------------------------------------------------------------------------
+                     Black Highlighter for Obsidian
+
+CSS Snippet made by Haru3S. This snippet is used to make the notes look like the
+BHL or Black Highlighter Theme from the scp-wiki.wikidot orginally made by rossjrw,
+notgull, and emmiegit on GitHub. This is still sorta expirmental and has some really
+shitty CSS coding as it forks it from the Orginal GitHub to Obisdian.
+
+Headers are stolen from CyanVoxel's Daily Notes :3
+                
+------------------------------------------------------------------------------*/
+
+/* === CUSTOM MEDIA DEFINITIONS === */
+
+@custom-media --viewport-desktop only screen and (width >= 56.25rem);
+@custom-media --viewport-tablet only screen and (width <= 56.25rem);
+@custom-media --viewport-mobile only screen and (width <= 30rem);
+
+:root {
+    /* SIGMA-10 ROOT RULES */
+
+    /* ===SIGMA-10 COLOURS VAR=== */
+    /*===STANDARD THEME COLOURS===*/
+    /* white */
+    --white-monochrome: rgb(252, 252, 252);
+	/* v light gray for blockquotes and stuff */
+	--pale-gray-monochrome: rgb(244, 244, 244);
+	/* very light pale gray for misc. use */
+	--light-pale-gray-monochrome: rgb(244, 244, 244);
+	/* very light accent gray for misc. use */
+	--very-light-gray-monochrome: rgb(215, 215, 215);
+	/* light accent gray for login status */
+	--light-gray-monochrome: rgb(160, 160, 160);
+	/* gray */
+	--gray-monochrome: rgb(66, 66, 72);
+	/* dark accent gray for sidebar background */
+	--dark-gray-monochrome: rgb(48, 48, 52);
+	/* black */
+	--black-monochrome: rgb(12, 12, 12);
+	/* subdued theme color */
+	--pale-accent: rgb(210, 20, 20);
+	/* vivid theme color the "default" accent color */
+	--bright-accent: rgb(133, 0, 5);
+	/* theme color */
+	--medium-accent: rgb(100, 46, 44);
+	/* darker theme color */
+	--dark-accent: rgb(100, 3, 15);
+	/* alternate accent color for newpage links */
+	--alt-accent: rgb(221, 102, 17);
+
+    /* ===PRIMARY COLORS=== */
+	/* ===GENERAL COLORS=== */
+	--swatch-primary: var(--bright-accent);
+	--swatch-primary-darker: var(--medium-accent);
+	--swatch-primary-darkest: var(--dark-accent);
+	--swatch-border-color: var(--black-monochrome);
+    --swatch-alt-accent: var(--alt-accent);
+
+	/* ===GENERAL TEXT COLORS=== */
+	--swatch-text-dark: var(--black-monochrome);
+    --swatch-text-dark-gray: var(--dark-gray-monochrome);
+	--swatch-text-light: var(--white-monochrome);
+	--swatch-text-general: var(--swatch-text-dark);
+	--swatch-important-text: var(--bright-accent);
+
+	/* ===MENU COLORS=== */
+	/* ===MENU BACKGROUND COLORS=== */
+	--swatch-menubg-color: var(--white-monochrome);
+	--swatch-menubg-light-color: var(--pale-gray-monochrome);
+	--swatch-menubg-medium-color: var(--light-gray-monochrome);
+	--swatch-menubg-medium-dark-color: var(--gray-monochrome);
+	--swatch-menubg-dark-color: var(--dark-gray-monochrome);
+	--swatch-menubg-black-color: var(--black-monochrome);
+	--swatch-menubg-hover-color: var(--black-monochrome);
+
+	/* ===MENU TEXT COLORS=== */
+	--swatch-menutxt-dark-color: var(--black-monochrome);
+	--swatch-menutxt-light-color: var(--white-monochrome);
+	--swatch-menutxt-general-color: var(--swatch-menutxt-dark-color);
+
+	/* ===SECONDARY & TERTIARY COLORS=== */
+	/* Editing these will edit a vast majority of theme elements. Useful for making dark themes */
+
+	/* Colors for Secondary & Tertiary items like Blockquote and YUI Tabs */
+	--swatch-secondary-color: var(--swatch-menubg-light-color);
+	--swatch-tertiary-color: var(--swatch-menubg-medium-color);
+	--swatch-alternate-color: var(--swatch-menubg-dark-color);
+
+	/* Text Colors for Secondary & Tertiary items like Sidebar Headers and Top-Bar Menu Text */
+	--swatch-text-secondary-color: var(--swatch-menutxt-light-color);
+	--swatch-text-tertiary-color: var(--swatch-menutxt-dark-color);
+
+	/* ===PRIMARY GRADIENTS=== */
+	/* Creates the header image at top of page */
+	--gradient-header: linear-gradient(to top, rgb(var(--header-gradient-color-bottom)) 0%, rgb(var(--header-gradient-color-middle)) 90%, rgb(var(--header-gradient-color-top)) 100%);
+	/* Diagonal Strikes placed on top of header image */
+	--diagonal-stripes: repeating-linear-gradient(45deg, hsl(0deg 0% 100% / 0), hsl(0deg 0% 100% / 0) 0.25vh, rgb(88 88 88 / 0.1) 0.35vh, rgb(88 88 88 / 0.2) 0.5vh);
+	/* Create top-menu bar below the header */
+	--gradient-topmenu: linear-gradient(
+		to bottom,
+		rgb(255 255 255 / 0) 0%,
+		rgb(255 255 255 / 0) var(--header-height-on-desktop),
+		rgb(var(--swatch-topmenu-border-color)) var(--header-height-on-desktop),
+		rgb(var(--swatch-topmenu-bg-color)) calc(var(--header-height-on-desktop) + 0.125rem),
+		rgb(var(--swatch-topmenu-bg-color)) calc(100% - 0.125rem),
+		rgb(var(--swatch-topmenu-border-color)) 100%
+	);
+	--gradient-topmenu-mobile: linear-gradient(
+		to bottom,
+		rgb(var(--swatch-topmenu-border-color)) 0,
+		rgb(var(--swatch-topmenu-bg-color)) 0.125rem,
+		rgb(var(--swatch-topmenu-bg-color)) calc(var(--topbar-height-on-mobile) - 0.125rem),
+		rgb(var(--swatch-topmenu-bg-color)) calc(var(--topbar-height-on-mobile) - 0.125rem),
+		rgb(var(--swatch-topmenu-border-color)) var(--topbar-height-on-mobile)
+	);
+	/* Subtle gradient that begins just below the top-bar and header */
+	--background-gradient-distance: 40rem;
+	--gradient-background: linear-gradient(to bottom, rgb(var(--background-gradient-color)) 0, rgba(var(--background-gradient-color), 0) var(--background-gradient-distance));
+
+    /* ===BACKGROUND GRADIENT=== */
+
+	/* ===GENERAL BACKGROUND=== */
+	/* Overall Page Background Color */
+	--swatch-background: var(--white-monochrome);
+	/* Gradient Color used for the --gradient-background var */
+	--background-gradient-color: var(--very-light-gray-monochrome);
+
+	/* ===HEADER GRADIENT=== */
+	/* Colors forming the header gradient used in --gradient-header var */
+	--header-gradient-color-bottom: var(--medium-accent);
+	--header-gradient-color-middle: var(--black-monochrome);
+	--header-gradient-color-top: var(--black-monochrome);
+
+	/* ===TOPBAR GRADIENT=== */
+	/* Colors used in the --gradient-topmenu var to give the topbar its color */
+	--swatch-topmenu-bg-color: var(--swatch-menubg-medium-dark-color);
+	--swatch-topmenu-border-color: var(--swatch-menubg-black-color);
+
+	/* ===LINK COLORS=== */
+	--link-color: var(--pale-accent);
+	--visited-link-color: var(--swatch-primary-darkest);
+	--hover-link-color: var(--swatch-primary);
+	--newpage-color: var(--alt-accent);
+
+	/* ===CODE BLOCK COLORS=== */
+	--swatch-code-text-general: var(--swatch-text-general);
+
+	--swatch-code-text-comment: rgb(102 111 120); /* Greyish Blue */
+	--swatch-code-text-quotes: rgb(183 83 1); /* Redish Orange */
+	--swatch-code-text-string: rgb(86 122 13); /* Green */
+	--swatch-code-text-identifier: rgb(1 84 147); /* Blue */
+	--swatch-code-text-reserved: rgb(128 51 120); /* Dark Purple */
+
+	--swatch-code-text-builtin: var(--swatch-code-text-quotes);
+	--swatch-code-text-inlinedoc: var(--swatch-code-text-identifier);
+	--swatch-code-text-var: var(--swatch-code-text-string);
+	--swatch-code-text-url: var(--swatch-code-text-identifier);
+	--swatch-code-text-special: var(--swatch-code-text-identifier);
+	--swatch-code-text-number: var(--swatch-code-text-quotes);
+	--swatch-code-text-inlinetags: var(--swatch-code-text-quotes);
+}
+
+
+/* SIGMA-10 CSS THEME */
+
+.black-highlighter {
+    /* Important Colours */
+    --caret-color: var(--bright-accent);
+    /* --background-primary: linear-gradient(to 180deg, rgba(215, 215, 215, 1) 0%, rgba(252, 252, 252, 1) 100%); */
+	/* background-color: var(--very-light-gray-monochrome); */
+	background-color: var(--white-monochrome);
+    color: var(--black-monochrome);
+
+    /* Modifier */
+    --background-modifier-border-focus: var(--bright-accent);
+    --background-modifier-border: color-mix(in srgb, var(--black-monochrome) 60%, transparent);
+    --background-modifier-hover: color-mix(in srgb, var(--black-monochrome) 60%, transparent);
+    --pill-cover-hover: color-mix(in srgb, var(--black-monochrome) 60%, transparent);
+	--hr-color: var(--bright-accent);
+	--blockquote-border-color: var(--bright-accent);
+
+
+    /* Text Varations */
+    --text-normal: var(--black-monochrome);
+    --text-muted: var(--black-monochrome);
+    --text-faint: var(--black-monochrome);
+
+    /* Checkbox Colour */
+    --checkbox-color: var(--bright-accent);
+    --checkbox-marker-color: var(--black-monochrome);
+    --checkbox--color-hover: var(--dark-accent);
+    --checklist-done-color: var(--white-monochrome);
+    --checkbox-border-color: var(--white-monochrome);
+    --list-marker-color: var(--white-monochrome);
+    --collapse-icon-color-collapsed: var(--bright-accent);
+
+    /* Metadata Colour */
+    --metadata-label-text-color: var(--white-monochrome);
+    --metadata-input-text-color: var(--white-monochrome);
+
+    /* Codeblocks */
+    --code-background: var(--black-monochrome);
+    --code-normal: var(--white-monochrome);
+
+    /* Tags */
+    --tag-color: var(--white-monochrome);
+    --tag-background: var(--bright-accent);
+
+    /* Typography */
+    --font-monospace-theme: Recursive;
+    --hr-color: var(--light-gray-monochrome);
+    --interactive-accent: var(--bright-accent);
+	--link-color: var(--bright-accent);
+	--link-color-hover: var(--medium-accent);
+	--link-weight: 700;
+
+    
+}
+
+/*=== HEADERS & TEXT ===*/
+
+.black-highlighter :is(h1, .HyperMD-header.HyperMD-header-1) {
+    color: var(--bright-accent);
+    text-align: center;
+    font-size: 60px;
+	font-weight: 800;
+    font-family: Inter, "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 0 !important;
+}
+
+.black-highlighter :is(h2, .HyperMD-header.HyperMD-header-2) {
+    color: var(--black-monochrome);
+    text-align: center;
+    font-size: 30px;
+    font-family: Inter, "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    padding: 0 !important;
+}
+
+.black-highlighter :is(h3, .HyperMD-header.HyperMD-header-3) {
+    color: var(--dark-accent);
+    text-align: center;
+    font-size: 32px;
+    font-family: Inter, "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    padding-left: 0;
+}
+
+.black-highlighter :is(h4, .HyperMD-header.HyperMD-header-4) {
+    background-color: var(--bright-accent);
+    color: var(--white-monochrome);
+    text-align: left;
+    font-size: 20px;
+	font-family: "Bai Jamjuree", "JetBrainsMono Nerd Font Mono", "JetBrains Mono";
+    margin-bottom: 0;
+    padding-top: 0;
+    width: fit-content;
+    padding-left: 6px;
+    padding-right: 6px;
+    /* border: solid; */
+    border-radius: 8px;
+    /* border-width: 2px; */
+    word-wrap: normal;
+}
+
+.black-highlighter :is(h5, .HyperMD-header.HyperMD-header-5) {
+    color: var(--black-monochrome);
+    text-align: center;
+    font-size: 30px;
+    font-family: Inter, "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    padding: 0 !important;
+}
+
+.black-highlighter :is(h6, .HyperMD-header.HyperMD-header-6) {
+    background-color: var(--alt-accent);
+    color: var(--black-monochrome);
+    text-align: left;
+    font-size: 20px;
+	font-family: "Bai Jamjuree", "JetBrainsMono Nerd Font Mono", "JetBrains Mono";
+    margin-bottom: 0;
+    padding-top: 0;
+    width: fit-content;
+    padding-left: 6px;
+    padding-right: 6px;
+    /* border: solid; */
+    border-radius: 8px;
+    /* border-width: 2px; */
+    word-wrap: normal;
+}
+
+.black-highlighter :is(a:link, .cm-hmd-internal-link) {
+    color: var(--pale-accent);
+}
+
+.black-highlighter :is(a:hover, .cm-hmd-internal-link:hover) {
+    color: var(--bright-accent);
+}
+
+.black-highlighter p {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.black-highlighter hr {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+.black-highlighter img {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Coalition Theme (Global Occult Coalition) */
+
+.bhl-coalition {
+   --pale-gray-monochrome: rgb(244, 244, 244);
+   --light-gray-monochrome: rgb(170, 170, 170);
+   --gray-monochrome: rgb(66, 66, 72);
+   --pale-accent: rgb(167, 188, 201);
+   --bright-accent: rgb(56, 117, 161);
+   --medium-accent: rgb(44, 74, 120);
+   --dark-accent: rgb(32, 40, 78);
+   --alt-accent: rgb(187, 225, 250);
+}
+
+/* New Age Theme */
+
+.bhl-new-age_deepcrimson {
+	--pale-accent: rgb(255, 36, 60);
+	--bright-accent: rgb(255, 36, 60);
+	--dark-accent: rgb(255, 36, 60);
+	--medium-accent: rgb(255, 36, 60);
+	--black-monochrome: rgb(196, 196, 196);
+	--light-gray-monochrome: rgb(196, 196, 196);
+	--white-monochrome: rgb(6, 6, 6);
+	--very-light-gray-monochrome: rgb(26, 26, 26);
+}
+
+.bhl-new-age_mutantgreen {
+	--pale-accent: rgb(0, 209, 66);
+	--bright-accent: rgb(0, 209, 66);
+	--dark-accent: rgb(0, 209, 66);
+	--medium-accent: rgb(0, 209, 66);
+	--black-monochrome: rgb(196, 196, 196);
+	--light-gray-monochrome: rgb(196, 196, 196);
+	--white-monochrome: rgb(6, 6, 6);
+	--very-light-gray-monochrome: rgb(26, 26, 26);
+}
+
+.bhl-new-age_skylightblue {
+	--pale-accent: rgb(0, 184, 240);
+	--bright-accent: rgb(0, 184, 240);
+	--dark-accent: rgb(0, 184, 240);
+	--medium-accent: rgb(0, 184, 240);
+	--black-monochrome: rgb(196, 196, 196);
+	--light-gray-monochrome: rgb(196, 196, 196);
+	--white-monochrome: rgb(6, 6, 6);
+	--very-light-gray-monochrome: rgb(26, 26, 26);
+}
+
+.bhl-new-age_neonorange {
+	--pale-accent: rgb(255, 142, 20);
+	--bright-accent: rgb(255, 142, 20);
+	--dark-accent: rgb(255, 142, 20);
+	--medium-accent: rgb(255, 142, 20);
+	--black-monochrome: rgb(196, 196, 196);
+	--light-gray-monochrome: rgb(196, 196, 196);
+	--white-monochrome: rgb(6, 6, 6);
+	--very-light-gray-monochrome: rgb(26, 26, 26);
+}
+
+.bhl-new-age_healerpink {
+	--pale-accent: rgb(225, 101, 236);
+	--bright-accent: rgb(225, 101, 236);
+	--dark-accent: rgb(225, 101, 236);
+	--medium-accent: rgb(225, 101, 236);
+	--black-monochrome: rgb(196, 196, 196);
+	--light-gray-monochrome: rgb(196, 196, 196);
+	--white-monochrome: rgb(6, 6, 6);
+	--very-light-gray-monochrome: rgb(26, 26, 26);
+}
+
+.bhl-new-age_lavenderviolet {
+	--pale-accent: rgb(144, 79, 247);
+	--bright-accent: rgb(144, 79, 247);
+	--dark-accent: rgb(144, 79, 247);
+	--medium-accent: rgb(144, 79, 247);
+	--black-monochrome: rgb(196, 196, 196);
+	--light-gray-monochrome: rgb(196, 196, 196);
+	--white-monochrome: rgb(6, 6, 6);
+	--very-light-gray-monochrome: rgb(26, 26, 26);
+}
+
+.bhl-new-age_seafoamteal {
+	--pale-accent: rgb(54, 227, 184);
+	--bright-accent: rgb(54, 227, 184);
+	--dark-accent: rgb(54, 227, 184);
+	--medium-accent: rgb(54, 227, 184);
+	--black-monochrome: rgb(196, 196, 196);
+	--light-gray-monochrome: rgb(196, 196, 196);
+	--white-monochrome: rgb(6, 6, 6);
+	--very-light-gray-monochrome: rgb(26, 26, 26);
+}
