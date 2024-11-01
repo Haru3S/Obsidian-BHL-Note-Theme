@@ -1,5 +1,5 @@
 # Obsidian-BHL-Note-Theme
-## Black highlighter Recreation in Obsidian.
+## Black Highlighter Recreation in Obsidian.
 
 <p align="center">
   <img width="500"
