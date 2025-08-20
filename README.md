@@ -13,7 +13,7 @@ A recreation of [Black Highlighter](https://scp-wiki.wikidot.com/theme:black-hig
 
 There are a set of 7 main CSS classes that can be used to apply individual schemes to your notes.
 
-*NOTE:* Headers 4 and 6 were personal preference and uses and relies the [JetBrains Mono](https://www.jetbrains.com/lp/mono/) or [Bai Jamjuree](https://fonts.google.com/specimen/Bai+Jamjuree) fonts. If you don't wish to use these, then just change or remove those font-family lines from the snippet.
+*NOTE:* Headers 4 and 6 were personal preference and relies on the [JetBrains Mono](https://www.jetbrains.com/lp/mono/) or [Bai Jamjuree](https://fonts.google.com/specimen/Bai+Jamjuree) fonts. If you don't wish to use these, then just change or remove those font-family lines from the snippet.
 
 ### Page Themes
 
